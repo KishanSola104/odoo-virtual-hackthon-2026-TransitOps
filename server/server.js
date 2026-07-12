@@ -31,7 +31,6 @@ app.get("/", (req, res) => {
     res.send("TransitOps API Running");
 });
 
-<<<<<<< HEAD
 app.use("/auth", authRoutes);
 
 // Vehicle Routes
@@ -43,14 +42,6 @@ app.use("/vehicles",vehicleRoutes);
 const driverRoutes = require("./routes/driverRoutes");
 app.use("/drivers", driverRoutes);
 
-=======
-
-app.use("/auth", authRoutes);
-app.use(
-    "/vehicles",
-    vehicleRoutes
-);
->>>>>>> f0114640214865292065dadabe3bd0f3492a1546
 
 const PORT = process.env.PORT || 8000;
 
