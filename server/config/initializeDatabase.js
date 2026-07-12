@@ -59,12 +59,12 @@ async function initializeDatabase() {
                 email VARCHAR(255) UNIQUE NOT NULL,
                 mobile VARCHAR(20) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL,
+                mobile_number VARCHAR(10) UNIQUE,
                 role_id INT,
                 status ENUM('active','inactive') DEFAULT 'active',
                 is_deleted BOOLEAN DEFAULT FALSE,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                    ON UPDATE CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY(role_id) REFERENCES roles(id)
             )`
         );
@@ -115,7 +115,7 @@ async function initializeDatabase() {
             address VARCHAR(255),
             joined_date DATE,
             safety_score DECIMAL(5,2),
-            status ENUM('Available', 'On Trip', 'off Duty','Suspended') DEFAULT 'Available',
+            status ENUM('Available', 'On Trip', 'Off Duty','Suspended') DEFAULT 'Available',
             is_deleted BOOLEAN DEFAULT FALSE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -124,6 +124,7 @@ async function initializeDatabase() {
         console.log("Drivers Table Created");
 
         //create table trips
+<<<<<<< HEAD
         // await connection.query(
         //     `CREATE TABLE IF NOT EXISTS trips(
         //     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -173,6 +174,57 @@ async function initializeDatabase() {
         //     )`
         // );        
         // console.log("Maintenance Records Table Created");
+=======
+        await connection.query(
+            `CREATE TABLE IF NOT EXISTS trips(
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            source VARCHAR(100) NOT NULL,
+            destination VARCHAR(100) NOT NULL,
+            vehicle_id INT,
+            driver_id INT,
+            cargo_weight DECIMAL(10,2),
+            planned_distance DECIMAL(10,2),
+            start_odometer DECIMAL(10,2),
+            final_odometer DECIMAL(10,2),
+            fuel_consumed DECIMAL(10,2),
+            revenue DECIMAL(12,2),
+            notes TEXT,
+            status ENUM('Draft','Dispatched','Completed','Cancelled') DEFAULT 'Draft',
+            created_by INT,
+            is_deleted BOOLEAN DEFAULT FALSE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            dispatched_at TIMESTAMP NULL,
+            completed_at TIMESTAMP NULL,
+            FOREIGN KEY(vehicle_id) REFERENCES vehicles(id),
+            FOREIGN KEY(driver_id) REFERENCES drivers(id),
+            FOREIGN KEY(created_by) REFERENCES users(id)
+            )`
+        );
+        console.log("Trips Table Created");
+
+
+        //Create Table maintenance_records
+        await connection.query(
+            `CREATE TABLE IF NOT EXISTS maintenance_records(
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            vehicle_id INT,
+            type VARCHAR(50) NOT NULL,
+            description TEXT,
+            cost DECIMAL(12,2),
+            vendor_name VARCHAR(100),
+            priority ENUM('Low','Medium','High') DEFAULT 'Medium',
+            status ENUM('Open','Closed') DEFAULT 'Open',
+            opened_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            closed_at TIMESTAMP NULL,
+            is_deleted BOOLEAN DEFAULT FALSE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY(vehicle_id) REFERENCES vehicles(id)
+            )`
+        );        
+        console.log("Maintenance Records Table Created");
+>>>>>>> 922bc04b1c86f650d54a005b4d9edc8e72f89dc7
 
 
         //Create Table fuel_records
@@ -201,6 +253,8 @@ async function initializeDatabase() {
         // );
         // console.log("Expense Types Table Created");
         
+
+        //
         
         
         
