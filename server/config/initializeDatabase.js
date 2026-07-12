@@ -58,12 +58,12 @@ async function initializeDatabase() {
                 name VARCHAR(255) NOT NULL,
                 email VARCHAR(255) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL,
+                mobile_number VARCHAR(10),
                 role_id INT,
                 status ENUM('active','inactive') DEFAULT 'active',
                 is_deleted BOOLEAN DEFAULT FALSE,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                    ON UPDATE CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY(role_id) REFERENCES roles(id)
             )`
         );
@@ -90,7 +90,7 @@ async function initializeDatabase() {
             acquisition_cost DECIMAL(10,2) NOT NULL,
             insurance_expiry DATE,
             fitness_expiry DATE,
-            status ENUM('Available', 'On Trip', 'Maintainance', 'Retired') DEFAULT 'Available',
+            status ENUM('Available', 'On Trip', 'Maintenance', 'Retired') DEFAULT 'Available',
             region VARCHAR(100),
             is_deleted BOOLEAN DEFAULT FALSE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -114,7 +114,7 @@ async function initializeDatabase() {
             address VARCHAR(255),
             joined_date DATE,
             safety_score DECIMAL(5,2),
-            status ENUM('Available', 'On Trip', 'off Duty','Suspended') DEFAULT 'Available',
+            status ENUM('Available', 'On Trip', 'Off Duty','Suspended') DEFAULT 'Available',
             is_deleted BOOLEAN DEFAULT FALSE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -200,6 +200,8 @@ async function initializeDatabase() {
         );
         console.log("Expense Types Table Created");
         
+
+        //
         
         
         
