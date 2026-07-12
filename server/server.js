@@ -41,6 +41,11 @@ const driverRoutes = require("./routes/driverRoutes");
 app.use("/drivers", driverRoutes);
 
 
+// Trip Routes
+const tripRoutes = require("./routes/tripRoute");
+app.use("/trips", tripRoutes);
+
+
 const PORT = process.env.PORT || 8000;
 
 const startServer = async () => {
