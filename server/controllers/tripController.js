@@ -150,5 +150,6 @@ module.exports = {
     getAllTrips,
     getTripById,
     updateTrip,
-    deleteTrip
+    deleteTrip,
+    searchTrips
 };
