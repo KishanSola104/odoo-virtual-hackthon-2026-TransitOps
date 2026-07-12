@@ -56,6 +56,16 @@ const fuelRecordRoutes = require("./routes/fuel_recordRoute");
 app.use("/fuel-records", fuelRecordRoutes);
 
 
+//Expenses Routes
+const expenseRoutes = require("./routes/expensesRoute");
+app.use("/expenses", expenseRoutes);
+
+
+// Activity Logs Routes
+const activityLogRoutes = require("./routes/activity_logsRoute");
+app.use("/activity-logs", activityLogRoutes);
+
+
 const PORT = process.env.PORT || 8000;
 
 const startServer = async () => {
