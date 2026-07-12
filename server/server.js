@@ -1,20 +1,45 @@
 require("dotenv").config();
 
 const express = require("express");
-const app = express();
+const cors = require("cors");
 
 const initializeDatabase = require("./config/initializeDatabase");
 
+const authRoutes = require("./routes/authRoute");
+
+const app = express();
+
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.send("Welcome");
+    res.send("TransitOps API Running");
 });
+
+app.use("/auth", authRoutes);
 
 const PORT = process.env.PORT || 8000;
 
-app.listen(PORT, async () => {
-    console.log(`Server is running on port http://localhost:${PORT}`);
-    await initializeDatabase();
-});
+const startServer = async () => {
+    try {
 
+        await initializeDatabase();
+
+        app.listen(PORT, () => {
+            console.log(
+                `Server running on http://localhost:${PORT}`
+            );
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Server startup failed:",
+            error
+        );
+
+        process.exit(1);
+    }
+};
+
+startServer();
