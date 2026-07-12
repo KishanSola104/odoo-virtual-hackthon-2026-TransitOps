@@ -6,9 +6,6 @@ const cors = require("cors");
 const initializeDatabase = require("./config/initializeDatabase");
 
 const authRoutes = require("./routes/authRoute");
-const vehicleRoutes =
-require("./routes/vehicleRoutes");
-
 const app = express();
 
 app.use(
@@ -31,12 +28,17 @@ app.get("/", (req, res) => {
     res.send("TransitOps API Running");
 });
 
-
 app.use("/auth", authRoutes);
-app.use(
-    "/vehicles",
-    vehicleRoutes
-);
+
+// Vehicle Routes
+const vehicleRoutes = require("./routes/vehicleRoute");
+app.use("/vehicles",vehicleRoutes);
+
+
+// Driver Routes
+const driverRoutes = require("./routes/driverRoutes");
+app.use("/drivers", driverRoutes);
+
 
 const PORT = process.env.PORT || 8000;
 

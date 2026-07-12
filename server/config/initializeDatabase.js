@@ -59,7 +59,6 @@ async function initializeDatabase() {
                 email VARCHAR(255) UNIQUE NOT NULL,
                 mobile VARCHAR(20) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL,
-                mobile_number VARCHAR(10) UNIQUE,
                 role_id INT,
                 status ENUM('active','inactive') DEFAULT 'active',
                 is_deleted BOOLEAN DEFAULT FALSE,
@@ -74,10 +73,21 @@ async function initializeDatabase() {
         await connection.query(
             `CREATE TABLE IF NOT EXISTS vehicle_types(
             id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(50) NOT NULL
+            name ENUM('Light_truck', 'Heavy_truck','Medium_truck','Van','Tanker') NOT NULL
             )`
         );
         console.log("Vehicle Types Table Created");
+
+        // Insert default vehicle types
+        await connection.query(`
+            INSERT IGNORE INTO vehicle_types(name)
+            VALUES
+            ('Light_truck'),
+            ('Heavy_truck'),
+            ('Medium_truck'),
+            ('Van'),
+            ('Tanker')
+        `);
 
 
         //Create Table vechicles
@@ -175,6 +185,7 @@ async function initializeDatabase() {
         console.log("Maintenance Records Table Created");
 
 
+        //Create Table fuel_records
         await connection.query(
             `CREATE TABLE IF NOT EXISTS fuel_records(
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -199,8 +210,6 @@ async function initializeDatabase() {
             )`
         );
         console.log("Expense Types Table Created");
-        
-
         
 
         //Create Table Expenses
@@ -231,7 +240,6 @@ async function initializeDatabase() {
             )`
         );
         console.log("Activity Logs Table Created");
-
         
         await connection.end();
 
