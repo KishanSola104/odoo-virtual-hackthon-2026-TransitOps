@@ -3,14 +3,27 @@ import { Routes, Route } from "react-router-dom";
 
 import AuthPage from "../pages/AuthPage";
 
+import DashboardLayout from "../layouts/DashboardLayout";
+
+import Dashboard from "../pages/dashboard/Dashboard";
+
 
 function AppRoutes() {
   return (
     <Routes>
 
       {/* Authentication Page */}
-      <Route path="/" element={<AuthPage />} />
+      <Route path="/auth" element={<AuthPage />} />
 
+         <Route
+        path="/dashboard"
+        element={<DashboardLayout />}
+      ></Route>
+
+       <Route
+          index
+          element={<Dashboard />}
+        />
 
     </Routes>
   );
