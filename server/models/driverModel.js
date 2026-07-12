@@ -98,10 +98,52 @@ const deleteDriver = async (id) => {
     return result;
 };
 
+const searchDrivers = async ({
+    license_number,
+    name,
+    status
+}) => {
+
+    let query = `
+        SELECT *
+        FROM drivers
+        WHERE is_deleted = FALSE
+    `;
+
+    const values = [];
+
+    if (license_number) {
+        query += `
+            AND license_number LIKE ?
+        `;
+        values.push(`%${license_number}%`);
+    }
+
+    if (name) {
+        query += `
+            AND name LIKE ?
+        `;
+        values.push(`%${name}%`);
+    }
+
+    if (status) {
+        query += `
+            AND status = ?
+        `;
+        values.push(status);
+    }
+
+    const [rows] =
+        await db.query(query, values);
+
+    return rows;
+};
+
 module.exports = {
     createDriver,
     getAllDrivers,
     getDriverById,
     updateDriver,
-    deleteDriver
+    deleteDriver,
+    searchDrivers
 };

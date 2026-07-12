@@ -21,6 +21,12 @@ router.get(
 );
 
 router.get(
+    "/search",
+    authenticate,
+    driverController.searchDrivers
+);
+
+router.get(
     "/:id",
     authenticate,
     driverController.getDriverById
@@ -39,5 +45,6 @@ router.delete(
     authorize("Fleet Manager"),
     driverController.deleteDriver
 );
+
 
 module.exports = router;

@@ -1,28 +1,60 @@
 const express = require("express");
 
-const router =
-    express.Router();
+const router = express.Router();
 
 const vehicleController =
     require("../controllers/vehicleController");
 
-const authenticate =
+const authMiddleware =
     require("../middleware/authMiddleware");
 
-const authorize =
+const roleMiddleware =
     require("../middleware/roleMiddleware");
 
 router.post(
     "/",
-    authenticate,
-    authorize("Fleet Manager"),
+    authMiddleware,
+    roleMiddleware(
+        "Fleet Manager",
+        "Safety Officer"
+    ),
     vehicleController.createVehicle
 );
 
 router.get(
     "/",
-    authenticate,
+    authMiddleware,
     vehicleController.getAllVehicles
 );
 
-module.exports = router;    
+router.get(
+    "/search",
+    authMiddleware,
+    vehicleController.searchVehicles
+);
+
+router.get(
+    "/:id",
+    authMiddleware,
+    vehicleController.getVehicleById
+);
+
+router.put(
+    "/:id",
+    authMiddleware,
+    roleMiddleware(
+        "Fleet Manager"
+    ),
+    vehicleController.updateVehicle
+);
+
+router.delete(
+    "/:id",
+    authMiddleware,
+    roleMiddleware(
+        "Fleet Manager"
+    ),
+    vehicleController.deleteVehicle
+);
+
+module.exports = router;

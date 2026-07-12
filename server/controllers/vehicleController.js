@@ -51,7 +51,102 @@ const getAllVehicles = async (
     }
 };
 
+const getVehicleById = async (req, res) => {
+    try {
+
+        const result =
+            await vehicleService.getVehicleById(
+                req.params.id
+            );
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+
+    } catch (error) {
+
+        return res.status(
+            error.statusCode || 500
+        ).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+const updateVehicle = async (req, res) => {
+    try {
+
+        const result =
+            await vehicleService.updateVehicle(
+                req.params.id,
+                req.body
+            );
+
+        return res.status(200).json(result);
+
+    } catch (error) {
+
+        return res.status(
+            error.statusCode || 500
+        ).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+const deleteVehicle = async (req, res) => {
+    try {
+
+        const result =
+            await vehicleService.deleteVehicle(
+                req.params.id
+            );
+
+        return res.status(200).json(result);
+
+    } catch (error) {
+
+        return res.status(
+            error.statusCode || 500
+        ).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+const searchVehicles = async (req, res) => {
+    try {
+
+        const result =
+            await vehicleService.searchVehicles(
+                req.query
+            );
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+
+    } catch (error) {
+
+        return res.status(
+            error.statusCode || 500
+        ).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
     createVehicle,
-    getAllVehicles
+    getAllVehicles,
+    getVehicleById,
+    updateVehicle,
+    deleteVehicle,
+    searchVehicles
 };

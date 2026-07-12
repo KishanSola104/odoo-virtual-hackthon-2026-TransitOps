@@ -56,7 +56,79 @@ const getAllVehicles = async () => {
     };
 };
 
+const getVehicleById = async (id) => {
+
+    const vehicle =
+        await vehicleModel.getVehicleById(id);
+
+    if (!vehicle) {
+        throw {
+            statusCode: 404,
+            message: "Vehicle not found"
+        };
+    }
+
+    return vehicle;
+};
+
+const updateVehicle = async (
+    id,
+    vehicleData
+) => {
+
+    const vehicle =
+        await vehicleModel.getVehicleById(id);
+
+    if (!vehicle) {
+        throw {
+            statusCode: 404,
+            message: "Vehicle not found"
+        };
+    }
+
+    await vehicleModel.updateVehicle(
+        id,
+        vehicleData
+    );
+
+    return {
+        success: true,
+        message: "Vehicle updated successfully"
+    };
+};
+
+const deleteVehicle = async (id) => {
+
+    const vehicle =
+        await vehicleModel.getVehicleById(id);
+
+    if (!vehicle) {
+        throw {
+            statusCode: 404,
+            message: "Vehicle not found"
+        };
+    }
+
+    await vehicleModel.deleteVehicle(id);
+
+    return {
+        success: true,
+        message: "Vehicle deleted successfully"
+    };
+};
+
+const searchVehicles = async (filters) => {
+
+    return await vehicleModel.searchVehicles(
+        filters
+    );
+};
+
 module.exports = {
     createVehicle,
-    getAllVehicles
+    getAllVehicles,
+    getVehicleById,
+    updateVehicle,
+    deleteVehicle,
+    searchVehicles
 };

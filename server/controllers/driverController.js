@@ -120,9 +120,38 @@ const deleteDriver = async (req, res) => {
 
 };
 
+const searchDrivers = async (
+    req,
+    res
+) => {
+
+    try {
+
+        const result =
+            await driverService.searchDrivers(
+                req.query
+            );
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+
+    } catch (error) {
+
+        return res.status(
+            error.statusCode || 500
+        ).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
     createDriver,
     getAllDrivers,
+    searchDrivers,
     getDriverById,
     updateDriver,
     deleteDriver
