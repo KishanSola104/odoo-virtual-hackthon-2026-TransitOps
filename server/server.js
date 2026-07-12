@@ -17,6 +17,13 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
+const vehicleRoutes =
+require("./routes/vehicleRoutes");
+
+app.use(
+    "/vehicles",
+    vehicleRoutes
+);
 
 const PORT = process.env.PORT || 8000;
 
