@@ -73,7 +73,7 @@ async function initializeDatabase() {
         await connection.query(
             `CREATE TABLE IF NOT EXISTS vehicle_types(
             id INT AUTO_INCREMENT PRIMARY KEY,
-            name ENUM('Light_truck', 'Heavy_truck','Medium_truck','Van','Tanker') NOT NULL
+            name ENUM('Light_truck', 'Heavy_truck','Medium_truck','Van','Tanker') NOT NULL UNIQUE
             )`
         );
         console.log("Vehicle Types Table Created");
