@@ -6,20 +6,33 @@ const cors = require("cors");
 const initializeDatabase = require("./config/initializeDatabase");
 
 const authRoutes = require("./routes/authRoute");
+const vehicleRoutes =
+require("./routes/vehicleRoutes");
 
 const app = express();
 
-app.use(cors());
+app.use(
+    cors({
+        origin: [
+            "http://localhost:3000",
+            "http://localhost:5174"
+        ],
+        credentials: true,
+        allowedHeaders: [
+            "Content-Type",
+            "Authorization"
+        ]
+    })
+);
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
     res.send("TransitOps API Running");
 });
 
-app.use("/auth", authRoutes);
-const vehicleRoutes =
-require("./routes/vehicleRoutes");
 
+app.use("/auth", authRoutes);
 app.use(
     "/vehicles",
     vehicleRoutes
