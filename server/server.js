@@ -6,9 +6,6 @@ const cors = require("cors");
 const initializeDatabase = require("./config/initializeDatabase");
 
 const authRoutes = require("./routes/authRoute");
-const vehicleRoutes =
-require("./routes/vehicleRoute");
-
 const app = express();
 
 app.use(
@@ -34,7 +31,7 @@ app.get("/", (req, res) => {
 app.use("/auth", authRoutes);
 
 // Vehicle Routes
-const vehicleRoutes = require("./routes/vehicleRoutes");
+const vehicleRoutes = require("./routes/vehicleRoute");
 app.use("/vehicles",vehicleRoutes);
 
 
