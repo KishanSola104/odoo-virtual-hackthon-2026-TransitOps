@@ -6,13 +6,35 @@ const userModel =
 const {
     generateToken,
 } = require("./jwtService");
-
 const register = async ({
     name,
     email,
+    mobile,
     password,
     role_id,
 }) => {
+
+    // Email Validation
+    const emailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+        throw {
+            statusCode: 400,
+            message: "Invalid email format",
+        };
+    }
+
+    // Mobile Validation
+    const mobileRegex =
+        /^[0-9]{10}$/;
+
+    if (!mobileRegex.test(mobile)) {
+        throw {
+            statusCode: 400,
+            message: "Mobile number must be exactly 10 digits",
+        };
+    }
 
     const existingUser =
         await userModel.findByEmail(
@@ -20,11 +42,9 @@ const register = async ({
         );
 
     if (existingUser) {
-
         throw {
             statusCode: 400,
-            message:
-                "Email already exists",
+            message: "Email already exists",
         };
     }
 
@@ -34,11 +54,9 @@ const register = async ({
         );
 
     if (!role) {
-
         throw {
             statusCode: 404,
-            message:
-                "Invalid role selected",
+            message: "Invalid role selected",
         };
     }
 
@@ -52,14 +70,14 @@ const register = async ({
         await userModel.createUser(
             name,
             email,
+            mobile,
             hashedPassword,
             role_id
         );
 
     return {
         success: true,
-        message:
-            "User registered successfully",
+        message: "User registered successfully",
         userId,
     };
 };
