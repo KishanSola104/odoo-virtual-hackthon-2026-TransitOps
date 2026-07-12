@@ -13,7 +13,8 @@ app.use(
         origin: [
             "http://localhost:3000",
             "http://localhost:5174",
-            "http://localhost:5175"
+            "http://localhost:5175",
+            "http://localhost:5173"
         ],
         credentials: true,
         allowedHeaders: [
@@ -54,7 +55,6 @@ app.use("/maintenance", maintenanceRecordRoutes);
 //Fuel Record Routes
 const fuelRecordRoutes = require("./routes/fuel_recordRoute");
 app.use("/fuel-records", fuelRecordRoutes);
-
 
 const PORT = process.env.PORT || 8000;
 

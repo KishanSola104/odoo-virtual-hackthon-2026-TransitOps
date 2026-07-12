@@ -118,6 +118,33 @@ const deleteTrip = async (req, res) => {
 
 };
 
+const searchTrips = async (
+    req,
+    res
+) => {
+    try {
+
+        const result =
+            await tripService.searchTrips(
+                req.query
+            );
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+
+    } catch (error) {
+
+        return res.status(
+            error.statusCode || 500
+        ).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
     createTrip,
     getAllTrips,

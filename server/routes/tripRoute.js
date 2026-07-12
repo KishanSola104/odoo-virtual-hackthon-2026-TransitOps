@@ -45,4 +45,10 @@ router.delete(
     tripController.deleteTrip
 );
 
+router.get(
+    "/search",
+    authMiddleware,
+    tripController.searchTrips
+);
+
 module.exports = router;

@@ -139,10 +139,56 @@ const deleteTrip = async (id) => {
     return result;
 };
 
+const searchTrips = async ({
+    driver_id,
+    vehicle_id,
+    status
+}) => {
+
+    let query = `
+        SELECT *
+        FROM trips
+        WHERE is_deleted = FALSE
+    `;
+
+    const values = [];
+
+    if (driver_id) {
+        query += `
+            AND driver_id = ?
+        `;
+        values.push(driver_id);
+    }
+
+    if (vehicle_id) {
+        query += `
+            AND vehicle_id = ?
+        `;
+        values.push(vehicle_id);
+    }
+
+    if (status) {
+        query += `
+            AND status = ?
+        `;
+        values.push(status);
+    }
+
+    query += `
+        ORDER BY created_at DESC
+    `;
+
+    const [rows] =
+        await db.query(query, values);
+
+    return rows;
+};
+
 module.exports = {
     createTrip,
     getAllTrips,
     getTripById,
     updateTrip,
-    deleteTrip
+    deleteTrip,
+    searchTrips
 };
