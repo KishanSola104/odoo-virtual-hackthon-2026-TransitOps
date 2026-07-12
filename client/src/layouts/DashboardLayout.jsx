@@ -8,21 +8,25 @@ function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen">
+
       <Sidebar
-        isOpen={sidebarOpen}
-        closeSidebar={() => setSidebarOpen(false)}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
       />
 
-      <div className="flex flex-1 flex-col">
+      <div className="flex-1">
+
         <Navbar
-          openSidebar={() => setSidebarOpen(true)}
+          setSidebarOpen={setSidebarOpen}
         />
 
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="p-6">
           <Outlet />
         </main>
+
       </div>
+
     </div>
   );
 }
