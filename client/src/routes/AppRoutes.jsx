@@ -1,21 +1,19 @@
-import React from 'react';
-import {BrowserRouter,Routes, Route} from 'react-router-dom';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-import SignUpForm from '../pages/auth/SignUpForm';
-import LoginForm from '../pages/auth/LoginForm';
-import HomePage from '../pages/HomePage';
+import AuthPage from "../pages/AuthPage";
 
 
 function AppRoutes() {
-    return (
-        <>
-            <Routes>
-                <Route path="/signup" element={<SignUpForm />} />
-                <Route path="/login" element={<LoginForm />} />
-                <Route path="/" element={<HomePage />} />
-            </Routes>
-        </>
-    );
+  return (
+    <Routes>
+
+      {/* Authentication Page */}
+      <Route path="/" element={<AuthPage />} />
+
+
+    </Routes>
+  );
 }
 
 export default AppRoutes;
