@@ -47,7 +47,7 @@ router.delete(
 
 router.get(
     "/search",
-    authMiddleware,
+    authenticate,
     tripController.searchTrips
 );
 

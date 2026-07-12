@@ -56,8 +56,6 @@ app.use("/maintenance", maintenanceRecordRoutes);
 const fuelRecordRoutes = require("./routes/fuel_recordRoute");
 app.use("/fuel-records", fuelRecordRoutes);
 
-<<<<<<< HEAD
-=======
 
 //Expenses Routes
 const expenseRoutes = require("./routes/expensesRoute");
@@ -69,7 +67,6 @@ const activityLogRoutes = require("./routes/activity_logsRoute");
 app.use("/activity-logs", activityLogRoutes);
 
 
->>>>>>> ad8c2f16ef7a0f6fd1b6b9bae3c3826f113ded37
 const PORT = process.env.PORT || 8000;
 
 const startServer = async () => {
