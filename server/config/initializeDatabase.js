@@ -201,14 +201,77 @@ async function initializeDatabase() {
         console.log("Expense Types Table Created");
         
 
-        //
-        
-        
-        
-        
-        
-        
-        
+        //Create Table Expenses
+        await connection.query(
+            `CREATE TABLE IF NOT EXISTS expenses(
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            vehicle_id INT,
+            type_id INT NULL,
+            amount DECIMAL(12,2) NOT NULL,
+            date DATE,
+            notes TEXT,
+            FOREIGN KEY(vehicle_id) REFERENCES vehicles(id),
+            FOREIGN KEY(type_id) REFERENCES expense_types(id)
+            )`
+        );
+        console.log("Expenses Table Created");
+
+
+        //Create table Activity Logs
+        await connection.query(
+            `CREATE TABLE IF NOT EXISTS activity_logs(
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT,
+            action VARCHAR(255) NOT NULL,
+            entity VARCHAR(100) NOT NULL,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(user_id) REFERENCES users(id)
+            )`
+        );
+        console.log("Activity Logs Table Created");
+
+        // Create Indexes
+        await connection.query(
+            `CREATE INDEX idx_users_email ON users(email);
+            CREATE INDEX idx_users_role_id ON users(role_id);
+
+            CREATE INDEX idx_vehicles_registration ON vehicles(registration_number);
+            CREATE INDEX idx_vehicles_status ON vehicles(status);
+
+            CREATE INDEX idx_drivers_license ON drivers(license_number);
+            CREATE INDEX idx_drivers_status ON drivers(status);
+
+            CREATE INDEX idx_trips_vehicle_id ON trips(vehicle_id);
+            CREATE INDEX idx_trips_driver_id ON trips(driver_id);
+            CREATE INDEX idx_trips_status ON trips(status);
+            CREATE INDEX idx_trips_created_by ON trips(created_by);
+            CREATE INDEX idx_trips_dispatched_at ON trips(dispatched_at);
+
+
+            CREATE INDEX idx_trips_vehicle_status ON trips(vehicle_id, status);
+
+
+            CREATE INDEX idx_fuel_vehicle_id ON fuel_records(vehicle_id);
+            CREATE INDEX idx_fuel_trip_id ON fuel_records(trip_id);
+            CREATE INDEX idx_fuel_date ON fuel_records(date);
+
+            CREATE INDEX idx_fuel_vehicle_date ON fuel_records(vehicle_id, date);
+
+
+            CREATE INDEX idx_maintenance_vehicle_id ON maintenance_records(vehicle_id);
+            CREATE INDEX idx_maintenance_status ON maintenance_records(status);
+
+
+            CREATE INDEX idx_expenses_vehicle_id ON expenses(vehicle_id);
+            CREATE INDEX idx_expenses_type_id ON expenses(type_id);
+            CREATE INDEX idx_expenses_date ON expenses(date);
+
+
+            CREATE INDEX idx_expense_vehicle_date ON expenses(vehicle_id, date);
+
+            )`
+        );
+        console.log("Indexes Created");
         
         
         await connection.end();
