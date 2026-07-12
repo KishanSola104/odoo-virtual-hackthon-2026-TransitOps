@@ -59,7 +59,6 @@ async function initializeDatabase() {
                 email VARCHAR(255) UNIQUE NOT NULL,
                 mobile VARCHAR(20) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL,
-                mobile_number VARCHAR(10) UNIQUE,
                 role_id INT,
                 status ENUM('active','inactive') DEFAULT 'active',
                 is_deleted BOOLEAN DEFAULT FALSE,
@@ -175,10 +174,7 @@ async function initializeDatabase() {
         console.log("Maintenance Records Table Created");
 
 
-<<<<<<< HEAD
-=======
         //Create Table fuel_records
->>>>>>> 393037eeb93afe9d048baac0179b93e0eb8f404c
         await connection.query(
             `CREATE TABLE IF NOT EXISTS fuel_records(
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -205,17 +201,6 @@ async function initializeDatabase() {
         console.log("Expense Types Table Created");
         
 
-<<<<<<< HEAD
-        
-        
-        
-        
-        
-        
-        
-        
-        
-=======
         //Create Table Expenses
         await connection.query(
             `CREATE TABLE IF NOT EXISTS expenses(
@@ -244,7 +229,6 @@ async function initializeDatabase() {
             )`
         );
         console.log("Activity Logs Table Created");
->>>>>>> 393037eeb93afe9d048baac0179b93e0eb8f404c
         
         await connection.end();
 

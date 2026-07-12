@@ -7,7 +7,7 @@ const initializeDatabase = require("./config/initializeDatabase");
 
 const authRoutes = require("./routes/authRoute");
 const vehicleRoutes =
-require("./routes/vehicleRoutes");
+require("./routes/vehicleRoute");
 
 const app = express();
 
