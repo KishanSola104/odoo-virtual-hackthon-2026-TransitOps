@@ -10,6 +10,10 @@ import UserDropdown from "./UserDropdown";
 function Navbar({ openSidebar }) {
   const [showDropdown, setShowDropdown] = useState(false);
 
+  // Logged-in User
+  const user =
+    JSON.parse(localStorage.getItem("user")) || {};
+
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
@@ -36,6 +40,7 @@ function Navbar({ openSidebar }) {
       {/* Left */}
 
       <div className="flex items-center gap-4">
+
         <button
           onClick={openSidebar}
           className="
@@ -50,20 +55,31 @@ function Navbar({ openSidebar }) {
         </button>
 
         <div>
+
           <h1 className="font-display text-2xl font-bold text-gray-800">
+
             Dashboard
+
           </h1>
 
           <p className="text-sm text-gray-500">
+
             {today}
+
           </p>
+
         </div>
+
       </div>
 
       {/* Right */}
 
       <div className="flex items-center gap-6">
+
+        {/* Notification */}
+
         <button className="relative">
+
           <Bell
             size={22}
             className="text-gray-600"
@@ -80,15 +96,22 @@ function Navbar({ openSidebar }) {
               bg-red-500
             "
           />
+
         </button>
 
+        {/* User */}
+
         <div className="relative">
+
           <button
             onClick={() =>
               setShowDropdown(!showDropdown)
             }
             className="flex items-center gap-3"
           >
+
+            {/* Avatar */}
+
             <div
               className="
                 flex
@@ -102,12 +125,17 @@ function Navbar({ openSidebar }) {
                 text-white
               "
             >
-              M
+              {user?.name?.charAt(0)?.toUpperCase()}
             </div>
 
+            {/* Name */}
+
             <div className="hidden text-left sm:block">
+
               <h3 className="font-semibold text-gray-800">
-                Marcus Chen
+
+                {user?.name}
+
               </h3>
 
               <span
@@ -120,21 +148,32 @@ function Navbar({ openSidebar }) {
                   text-brand
                 "
               >
-                Fleet Manager
+                {user?.role}
               </span>
+
             </div>
 
             <ChevronDown
               size={18}
               className={`transition-transform ${
-                showDropdown ? "rotate-180" : ""
+                showDropdown
+                  ? "rotate-180"
+                  : ""
               }`}
             />
+
           </button>
 
-          {showDropdown && <UserDropdown />}
+          {showDropdown && (
+            <UserDropdown
+              user={user}
+            />
+          )}
+
         </div>
+
       </div>
+
     </header>
   );
 }

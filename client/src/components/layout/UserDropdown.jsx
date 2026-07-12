@@ -1,38 +1,89 @@
 import React from "react";
-import { LogOut, User, Settings } from "lucide-react";
+import {
+  LogOut,
+  User,
+  Settings,
+} from "lucide-react";
 
-function UserDropdown() {
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../utils/auth";
+
+function UserDropdown({ user }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/auth");
+  };
+
   return (
     <div
       className="
         absolute
         right-0
         top-14
-        w-64
-        rounded-xl
+        z-50
+        w-72
+        overflow-hidden
+        rounded-2xl
         border
         border-gray-200
         bg-white
         shadow-2xl
-        overflow-hidden
-        z-50
       "
     >
       {/* User Info */}
 
-      <div className="px-5 py-4">
+      <div className="flex items-center gap-4 px-5 py-5">
 
-        <h3 className="font-semibold text-gray-800">
-          Marcus Chen
-        </h3>
+        <div
+          className="
+            flex
+            h-12
+            w-12
+            items-center
+            justify-center
+            rounded-full
+            bg-brand
+            text-lg
+            font-bold
+            text-white
+          "
+        >
+          {user?.name?.charAt(0)?.toUpperCase()}
+        </div>
 
-        <p className="text-sm text-gray-500">
-          manager@transitops.io
-        </p>
+        <div className="flex-1">
+
+          <h3 className="font-semibold text-gray-800">
+            {user?.name}
+          </h3>
+
+          <p className="text-sm text-gray-500">
+            {user?.email}
+          </p>
+
+          <span
+            className="
+              mt-2
+              inline-block
+              rounded-full
+              bg-blue-100
+              px-2
+              py-1
+              text-xs
+              font-medium
+              text-brand
+            "
+          >
+            {user?.role}
+          </span>
+
+        </div>
 
       </div>
 
-      <div className="border-t"></div>
+      <div className="border-t" />
 
       {/* Menu */}
 
@@ -44,13 +95,13 @@ function UserDropdown() {
           gap-3
           px-5
           py-3
-          hover:bg-gray-100
           transition
+          hover:bg-gray-100
         "
       >
         <User size={18} />
 
-        Profile
+        My Profile
       </button>
 
       <button
@@ -61,8 +112,8 @@ function UserDropdown() {
           gap-3
           px-5
           py-3
-          hover:bg-gray-100
           transition
+          hover:bg-gray-100
         "
       >
         <Settings size={18} />
@@ -70,9 +121,12 @@ function UserDropdown() {
         Settings
       </button>
 
-      <div className="border-t"></div>
+      <div className="border-t" />
+
+      {/* Logout */}
 
       <button
+        onClick={handleLogout}
         className="
           flex
           w-full
@@ -81,14 +135,15 @@ function UserDropdown() {
           px-5
           py-3
           text-red-600
-          hover:bg-red-50
           transition
+          hover:bg-red-50
         "
       >
         <LogOut size={18} />
 
         Sign Out
       </button>
+
     </div>
   );
 }
