@@ -206,11 +206,21 @@ async function initializeDatabase() {
         await connection.query(
             `CREATE TABLE IF NOT EXISTS expense_types(
             id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(100) NOT NULL UNIQUE
+            name ENUM('Fuel','Maintenance','Total') NOT NULL UNIQUE
             )`
         );
         console.log("Expense Types Table Created");
         
+
+        //Insert default expense types
+        await connection.query(`
+            INSERT IGNORE INTO expense_types(name)
+            VALUES
+            ('Fuel'),
+            ('Maintenance'),
+            ('Total')
+        `);
+
 
         //Create Table Expenses
         await connection.query(
