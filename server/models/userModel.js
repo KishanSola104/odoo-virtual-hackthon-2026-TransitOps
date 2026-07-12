@@ -8,6 +8,7 @@ const findByEmail = async (email) => {
             u.id,
             u.name,
             u.email,
+            u.mobile,
             u.password,
             u.status,
             r.name AS role,
@@ -22,10 +23,10 @@ const findByEmail = async (email) => {
 
     return rows[0];
 };
-
 const createUser = async (
     name,
     email,
+    mobile,
     hashedPassword,
     roleId
 ) => {
@@ -36,14 +37,16 @@ const createUser = async (
         (
             name,
             email,
+            mobile,
             password,
             role_id
         )
-        VALUES (?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?)
         `,
         [
             name,
             email,
+            mobile,
             hashedPassword,
             roleId
         ]
