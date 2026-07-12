@@ -186,7 +186,10 @@ async function initializeDatabase() {
         console.log("Maintenance Records Table Created");
 
 
+<<<<<<< HEAD
         //Create Table fuel_records
+=======
+>>>>>>> f0114640214865292065dadabe3bd0f3492a1546
         await connection.query(
             `CREATE TABLE IF NOT EXISTS fuel_records(
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -213,6 +216,11 @@ async function initializeDatabase() {
         console.log("Expense Types Table Created");
         
 
+<<<<<<< HEAD
+=======
+        
+
+>>>>>>> f0114640214865292065dadabe3bd0f3492a1546
         //Create Table Expenses
         await connection.query(
             `CREATE TABLE IF NOT EXISTS expenses(
@@ -241,6 +249,10 @@ async function initializeDatabase() {
             )`
         );
         console.log("Activity Logs Table Created");
+<<<<<<< HEAD
+=======
+
+>>>>>>> f0114640214865292065dadabe3bd0f3492a1546
         
         await connection.end();
 
