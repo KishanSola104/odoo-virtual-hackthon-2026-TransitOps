@@ -41,6 +41,21 @@ const driverRoutes = require("./routes/driverRoutes");
 app.use("/drivers", driverRoutes);
 
 
+// Trip Routes
+const tripRoutes = require("./routes/tripRoute");
+app.use("/trips", tripRoutes);
+
+
+// Maintenance Record Routes
+const maintenanceRecordRoutes = require("./routes/maintenance_recordRoute");
+app.use("/maintenance", maintenanceRecordRoutes);
+
+
+//Fuel Record Routes
+const fuelRecordRoutes = require("./routes/fuel_recordRoute");
+app.use("/fuel-records", fuelRecordRoutes);
+
+
 const PORT = process.env.PORT || 8000;
 
 const startServer = async () => {
