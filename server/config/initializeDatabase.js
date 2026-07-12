@@ -58,7 +58,7 @@ async function initializeDatabase() {
                 name VARCHAR(255) NOT NULL,
                 email VARCHAR(255) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL,
-                mobile_number VARCHAR(10),
+                mobile_number VARCHAR(10) UNIQUE,
                 role_id INT,
                 status ENUM('active','inactive') DEFAULT 'active',
                 is_deleted BOOLEAN DEFAULT FALSE,
@@ -144,7 +144,7 @@ async function initializeDatabase() {
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             dispatched_at TIMESTAMP NULL,
             completed_at TIMESTAMP NULL,
-            FOREIGN KEY(vechile_id) REFRENCES vehicles(id),
+            FOREIGN KEY(vehicle_id) REFERENCES vehicles(id),
             FOREIGN KEY(driver_id) REFERENCES drivers(id),
             FOREIGN KEY(created_by) REFERENCES users(id)
             )`
@@ -162,7 +162,7 @@ async function initializeDatabase() {
             cost DECIMAL(12,2),
             vendor_name VARCHAR(100),
             priority ENUM('Low','Medium','High') DEFAULT 'Medium',
-            status ENUM('Open','Closed) DEFAULT 'Open',
+            status ENUM('Open','Closed') DEFAULT 'Open',
             opened_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             closed_at TIMESTAMP NULL,
             is_deleted BOOLEAN DEFAULT FALSE,
