@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import InputField from "./InputField";
+import { loginUser } from "../../services/LoginService";
 
 function LoginForm() {
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -12,7 +16,7 @@ function LoginForm() {
     remember: false,
   });
 
-  const handleChange = (e) => {
+   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
     setFormData({
@@ -21,13 +25,31 @@ function LoginForm() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      const response = await loginUser({
+        email: formData.email,
+        password: formData.password,
+      });
 
-    // Backend API
-    // POST /api/auth/login
+      // Save JWT
+      localStorage.setItem("token", response.token);
+
+      // Save User Details
+      localStorage.setItem(
+        "user",
+        JSON.stringify(response.user)
+      );
+
+      alert("Login Successful");
+
+      navigate("/dashboard");
+
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (

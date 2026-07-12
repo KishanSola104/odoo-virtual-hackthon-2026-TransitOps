@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
+import { registerUser } from "../../services/RegisterService";
+
 import InputField from "./InputField";
 
 function RegisterForm() {
@@ -23,18 +25,47 @@ function RegisterForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
+  if (formData.password !== formData.confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
 
-    console.log(formData);
-
-    // POST /api/auth/register
+  const roleMap = {
+    fleet_manager: 1,
+    driver: 2,
+    safety_officer: 3,
+    finance_analyst: 4,
   };
+
+  const payload = {
+    name: formData.fullName,
+    email: formData.email,
+    mobile: formData.phone,
+    password: formData.password,
+    role_id: roleMap[formData.role],
+  };
+
+  try {
+    const response = await registerUser(payload);
+
+    alert(response.message);
+
+    setFormData({
+      fullName: "",
+      email: "",
+      phone: "",
+      role: "",
+      password: "",
+      confirmPassword: "",
+    });
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
 
   return (
     <form
@@ -118,7 +149,7 @@ function RegisterForm() {
             <option value="fleet_manager">Fleet Manager</option>
             <option value="driver">Driver</option>
             <option value="safety_officer">Safety Officer</option>
-            <option value="finance_officer">Finance Officer</option>
+            <option value="finance_analyst">Finance Analyst</option>
           </select>
 
         </div>
